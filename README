@@ -1,7 +1,7 @@
 
     Perl 5 module IO::Tee
 
-Lingua::Stem::Ru is a pure perl module that lets you multiplex output
+IO::Tee is a pure perl module that lets you multiplex output
 to multiple file handles.
 
 INSTALLATION
