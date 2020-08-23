@@ -69,7 +69,7 @@ sub formline
     formline($picture, @_);
 
     my $ret = 1;
-    foreach my $fh (@{*$self}) { undef $ret unless print $fh $^A }
+    foreach my $fh (@{*$self}) { undef $ret unless $fh->print($^A) }
     return $ret;
 }
 
@@ -129,7 +129,7 @@ sub PRINT
 {
     my $self = shift;
     my $ret = 1;
-    foreach my $fh (@$self) { undef $ret unless print $fh @_ }
+    foreach my $fh (@$self) { undef $ret unless $fh->print(@_) }
     return $ret;
 }
 
@@ -138,7 +138,7 @@ sub PRINTF
     my $self = shift;
     my $fmt = shift;
     my $ret = 1;
-    foreach my $fh (@$self) { undef $ret unless printf $fh $fmt, @_ }
+    foreach my $fh (@$self) { undef $ret unless $fh->printf($fmt, @_) }
     return $ret;
 }
 
@@ -150,7 +150,7 @@ sub _multiplex_input
     {
         for (my $i = 1; $i < @$self; ++$i)
         {
-            undef $ret unless print {$self->[$i]} $input;
+            undef $ret unless {$self->[$i]}->print($input);
         }
     }
     $ret;
