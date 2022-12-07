@@ -11,7 +11,7 @@ use Symbol;
 use IO::Handle;
 use IO::File;
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 # Constructor -- bless array reference into our class
 
@@ -221,7 +221,7 @@ IO::Tee - Multiplex output to multiple output handles
 
     use IO::Tee;
 
-    $tee = IO::Tee->new($handle1, $handle2);
+    my $tee = IO::Tee->new($handle1, $handle2);
     print $tee "foo", "bar";
     my $input = <$tee>;
 
@@ -352,8 +352,7 @@ subsequent output multiplexing fails.
     use IO::Tee;
     use IO::File;
 
-    my $tee = new IO::Tee(\*STDOUT,
-        new IO::File(">tt1.out"), ">tt2.out");
+    my $tee = IO::Tee->new(\*STDOUT, IO::File->new(">tt1.out"), ">tt2.out");
 
     print join(' ', $tee->handles), "\n";
 
@@ -361,7 +360,7 @@ subsequent output multiplexing fails.
     for (1..10) { $tee->print($_, "\n") }
     $tee->flush;
 
-    $tee = new IO::Tee('</etc/passwd', \*STDOUT);
+    $tee = IO::Tee->new('</etc/passwd', \*STDOUT);
     my @lines = <$tee>;
     print scalar(@lines);
 
